@@ -17,6 +17,7 @@ class Grid:
     def __init__(self, width, height) -> None:
         self.width = width
         self.height = height
+        self.largestDistance = (width - 1) ** 2 + (height - 1) ** 2
         self.grid = {}
 
         self.generateBlank()
@@ -24,7 +25,7 @@ class Grid:
     def generateBlank(self):
         for x in range(self.width):
             for y in range(self.height):
-                self.grid[(x, y)] = Node((x, y), None)
+                self.grid[(x, y)] = None
 
     def getSurrounding(self, pos):
         neighbours = []
@@ -61,18 +62,6 @@ class Grid:
                 pygame.draw.rect(screen, (0, 0, 0), rect, 1)
 
     def setPos(self, pos, value):
-        self.grid[pos] = value
-
-    def getPos(self, pos):
-        return self.grid[pos]
-
-    def positions(self):
-        return list(self.grid.keys())
-
-    def __getitem__(self, pos):
-        return self.grid[pos]
-
-    def __setitem__(self, pos, value) -> None:
         self.grid[pos] = value
 
 if __name__ == "__main__":

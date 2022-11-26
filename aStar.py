@@ -11,6 +11,8 @@ def Astar(grid: Grid, start: Node, end: Node):
         currentNode = openNodes[0]
         currentIndex = 0
 
+        #print(currentNode)
+
         for index, node in enumerate(openNodes):
             if node.f < currentNode.f:
                 currentNode = node
@@ -29,30 +31,24 @@ def Astar(grid: Grid, start: Node, end: Node):
             return path[::-1]
 
         neighbours = grid.getSurrounding(currentNode.pos)
-        children = []
         for pos in neighbours:
-            children.append(Node(pos, currentNode))
-
-        for child in children:
+            child = Node(pos, currentNode)
             for closed in closedNodes:
                 if child.pos == closed.pos:
                     continue
-            
 
-            child.g = currentNode.g + 5
+            child.g = currentNode.g + grid.largestDistance
             child.h = (child.pos[0] - end.pos[0]) ** 2 + (child.pos[1] - end.pos[1]) ** 2
             child.f = child.g + child.h
 
-            
             for node in openNodes:
                 if child.pos == node.pos and child.g > node.g:
                     continue
-            
 
             openNodes.append(child)
 
 if __name__ == "__main__":
-    grid = Grid(5, 5)
+    grid = Grid(10, 10)
     start = Node((0, 0), None)
     end = Node((grid.width - 1, 0), None)
 
